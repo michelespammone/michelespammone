@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Responsive Image Swap with Sound</title>
+<title>Interactive Image Swap with Sound</title>
 <style>
   body, html {
     height: 100%;
@@ -21,6 +21,7 @@
     max-width: 500px; /* The image won't scale beyond 500px width */
     height: auto; /* height is set to auto to maintain aspect ratio */
     overflow: hidden; /* prevents the image from spilling out of the container */
+    cursor: pointer; /* changes the mouse cursor to indicate it's clickable */
   }
 
   img {
@@ -31,17 +32,12 @@
   audio {
     display: none; /* initially hidden */
   }
-
-  button {
-    margin-top: 20px;
-    cursor: pointer;
-  }
 </style>
 </head>
 <body>
 
-<div id="imageContainer">
-  <img src="1.png" id="imageDisplay">
+<div id="imageContainer" onclick="startAction()">
+  <img src="1.png" id="imageDisplay" alt="Clickable Image">
 </div>
 
 <audio id="audioPlayer" loop>
@@ -49,14 +45,15 @@
   Your browser does not support the audio element.
 </audio>
 
-<button onclick="startAction()">Apriti Sesamo</button>
-
 <script>
   let imageSwapFlag = false;
+  let intervalId = null; // Store the interval ID for later use
 
   function startAction() {
-    document.getElementById('audioPlayer').play();
-    setInterval(swapImage, 80);
+    if (intervalId === null) { // Prevent multiple intervals if already started
+      document.getElementById('audioPlayer').play();
+      intervalId = setInterval(swapImage, 80);
+    }
   }
 
   function swapImage() {
