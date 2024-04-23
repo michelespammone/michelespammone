@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simple Media Page</title>
+<title>Media Playback Page</title>
 <style>
   body, html {
     height: 100%;
     margin: 0;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: black;
@@ -16,51 +17,55 @@
 
   .video-container {
     position: relative;
-    width: 90vw; /* Adjust based on your preference */
-    max-width: 600px; /* Maximum size of the video */
+    width: 90vw;
+    max-width: 500px;
+    display: none; /* initially hidden */
   }
 
   video {
     width: 100%;
-    height: auto;
-    display: block; /* Removes bottom space/gap */
+    display: block;
   }
 
-  .secret-link {
-    position: absolute;
-    top: 25%; /* adjust the position based on your secret area */
-    left: 25%; /* adjust the position based on your secret area */
-    width: 50%; /* size of the clickable area */
-    height: 50%; /* size of the clickable area */
-    cursor: pointer;
+  audio {
+    display: none; /* initially hidden */
   }
 
-  .highlight {
-    background-color: rgba(255, 0, 0, 0.3); /* Red color for visibility, adjust opacity as needed */
+  button {
+    margin-top: 20px;
   }
 </style>
 </head>
 <body>
 
-<div class="video-container">
-  <video autoplay loop muted playsinline>
-    <source src="sample.webm" type="video/webm">
+<div class="video-container" id="mediaContainer">
+  <video id="videoPlayer" loop muted playsinline>
+    <source src="video.webm" type="video/webm">
     Your browser does not support the video tag.
   </video>
-  <a href="http://example.com/secret-link" class="secret-link"></a>
+  <a href="http://example.com/secret-link" style="position:absolute; width:100%; height:100%; top:0; left:0;"></a>
 </div>
 
-<audio autoplay loop controls>
-  <source src="sample.mp3" type="audio/mpeg">
+<audio id="audioPlayer" loop>
+  <source src="audio.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 
-<button onclick="toggleHighlight()">Toggle Secret Area Highlight</button>
+<button onclick="playMedia()">Play Media</button>
 
 <script>
-  function toggleHighlight() {
-    const link = document.querySelector('.secret-link');
-    link.classList.toggle('highlight');
+  function playMedia() {
+    var video = document.getElementById('videoPlayer');
+    var audio = document.getElementById('audioPlayer');
+    var container = document.getElementById('mediaContainer');
+
+    // Reveal the media
+    container.style.display = 'block';
+    audio.style.display = 'block';
+
+    // Play the media
+    video.play();
+    audio.play();
   }
 </script>
 
