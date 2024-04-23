@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Image Swap with Effects</title>
+<title>Interactive Image Swap with Confetti</title>
 <style>
   body, html {
     height: 100%;
@@ -64,7 +64,7 @@
     if (intervalId === null) {
       document.getElementById('audioPlayer').play();
       intervalId = setInterval(swapImage, 80);
-      confettiEffect();
+      setInterval(confettiEffect, 750); // Initiate confetti at regular intervals
     }
     jiggleImage();
   }
@@ -84,10 +84,12 @@
   }
 
   function confettiEffect() {
-    const confettiSettings = { angle: 60, spread: 80, particleCount: 150, origin: { y: 0.6 } };
-    setInterval(() => {
-      canvasConfetti.create(document.body, confettiSettings)();
-    }, 750);
+    canvasConfetti({
+      angle: 60,
+      spread: 80,
+      particleCount: 150,
+      origin: { y: 0.6 }
+    });
   }
 
   // Preload images on window load
