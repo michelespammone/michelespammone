@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Media Playback Page</title>
+<title>Swap Images with Sound</title>
 <style>
   body, html {
     height: 100%;
@@ -13,16 +13,15 @@
     align-items: center;
     justify-content: center;
     background-color: black;
+    color: white;
   }
 
-  .video-container {
-    position: relative;
-    width: 90vw;
+  #imageContainer {
     max-width: 500px;
-    display: none; /* initially hidden */
+    width: 90vw;
   }
 
-  video {
+  img {
     width: 100%;
     display: block;
   }
@@ -38,12 +37,8 @@
 </head>
 <body>
 
-<div class="video-container" id="mediaContainer">
-  <video id="videoPlayer" loop muted playsinline>
-    <source src="video.webm" type="video/webm">
-    Your browser does not support the video tag.
-  </video>
-  <a href="http://example.com/secret-link" style="position:absolute; width:100%; height:100%; top:0; left:0;"></a>
+<div id="imageContainer">
+  <img src="1.png" id="imageDisplay">
 </div>
 
 <audio id="audioPlayer" loop>
@@ -51,21 +46,20 @@
   Your browser does not support the audio element.
 </audio>
 
-<button onclick="playMedia()">Apriti Sesamo</button>
+<button onclick="startAction()">Apriti Sesamo</button>
 
 <script>
-  function playMedia() {
-    var video = document.getElementById('videoPlayer');
-    var audio = document.getElementById('audioPlayer');
-    var container = document.getElementById('mediaContainer');
+  let imageSwapFlag = false;
 
-    // Reveal the media
-    container.style.display = 'block';
-    audio.style.display = 'block';
+  function startAction() {
+    document.getElementById('audioPlayer').play();
+    setInterval(swapImage, 200);
+  }
 
-    // Play the media
-    video.play();
-    audio.play();
+  function swapImage() {
+    const img = document.getElementById('imageDisplay');
+    img.src = imageSwapFlag ? '1.png' : '2.png';
+    imageSwapFlag = !imageSwapFlag;
   }
 </script>
 
