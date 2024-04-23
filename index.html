@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Preloaded Image Swap with Sound</title>
+<title>Fast Preloaded Image Swap with Sound</title>
 <style>
   body, html {
     height: 100%;
@@ -12,8 +12,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: black;
-    color: white;
+    background-color: white; /* Set background to white */
+    color: black; /* Change text color to black for better contrast on white background */
   }
 
   #imageContainer {
@@ -59,9 +59,9 @@
   }
 
   function startAction() {
-    if (intervalId === null) {
+    if (intervalId === null) { // Start only if not already started
       document.getElementById('audioPlayer').play();
-      intervalId = setInterval(swapImage, 200);
+      intervalId = setInterval(swapImage, 80); // Change interval to 80 ms
     }
   }
 
