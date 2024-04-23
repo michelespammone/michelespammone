@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Media Page</title>
+<style>
+  body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+  }
+
+  .video-container {
+    position: relative;
+    width: 90vw; /* Adjust based on your preference */
+    max-width: 600px; /* Maximum size of the video */
+  }
+
+  video {
+    width: 100%;
+    height: auto;
+    display: block; /* Removes bottom space/gap */
+  }
+
+  .secret-link {
+    position: absolute;
+    top: 25%; /* adjust the position based on your secret area */
+    left: 25%; /* adjust the position based on your secret area */
+    width: 50%; /* size of the clickable area */
+    height: 50%; /* size of the clickable area */
+    cursor: pointer;
+  }
+
+  .highlight {
+    background-color: rgba(255, 0, 0, 0.3); /* Red color for visibility, adjust opacity as needed */
+  }
+</style>
+</head>
+<body>
+
+<div class="video-container">
+  <video autoplay loop muted playsinline>
+    <source src="your-video-file.webm" type="video/webm">
+    Your browser does not support the video tag.
+  </video>
+  <a href="http://example.com/secret-link" class="secret-link"></a>
+</div>
+
+<audio autoplay loop>
+  <source src="your-audio-file.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<button onclick="toggleHighlight()">Toggle Secret Area Highlight</button>
+
+<script>
+  function toggleHighlight() {
+    const link = document.querySelector('.secret-link');
+    link.classList.toggle('highlight');
+  }
+</script>
+
+</body>
+</html>
