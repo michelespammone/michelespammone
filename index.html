@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Image Swap with Sound</title>
+<title>Preloaded Image Swap with Sound</title>
 <style>
   body, html {
     height: 100%;
@@ -47,20 +47,32 @@
 
 <script>
   let imageSwapFlag = false;
-  let intervalId = null; // Store the interval ID for later use
+  let intervalId = null;
+  let imagesToPreload = ["1.png", "2.png"];
+  let preloadedImages = [];
+
+  function preloadImages() {
+    for (let i = 0; i < imagesToPreload.length; i++) {
+      preloadedImages[i] = new Image();
+      preloadedImages[i].src = imagesToPreload[i];
+    }
+  }
 
   function startAction() {
-    if (intervalId === null) { // Prevent multiple intervals if already started
+    if (intervalId === null) {
       document.getElementById('audioPlayer').play();
-      intervalId = setInterval(swapImage, 80);
+      intervalId = setInterval(swapImage, 200);
     }
   }
 
   function swapImage() {
     const img = document.getElementById('imageDisplay');
-    img.src = imageSwapFlag ? '1.png' : '2.png';
+    img.src = imageSwapFlag ? "1.png" : "2.png";
     imageSwapFlag = !imageSwapFlag;
   }
+
+  // Preload images on window load
+  window.onload = preloadImages;
 </script>
 
 </body>
