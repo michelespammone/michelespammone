@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Interactive Image with Hat</title>
+<title>Interactive Image Swap with Confetti</title>
 <style>
   body, html {
     height: 100%;
@@ -17,7 +17,6 @@
   }
 
   #imageContainer {
-    position: relative; /* Set position to relative for absolute positioning of child elements */
     width: 90%;
     max-width: 500px;
     cursor: pointer;
@@ -26,31 +25,21 @@
     align-items: center;
   }
 
-  #imageContainer img {
+  img {
     width: 100%;
-    transition: transform 0.1s ease-in-out; /* Smooth transition for transform */
-  }
-
-  #hatImage {
-    position: absolute;
-    top: 0%; /* Adjust this value to position the hat correctly */
-    left: 50%; /* Centers the hat along the width; adjust according to your image */
-    transform: translate(-50%, -50%) rotate(0deg); /* Initial transform positioning */
-    width: 5%; /* Adjust based on the desired size of the hat relative to the base image */
-    visibility: hidden; /* Initially hide the hat */
-    pointer-events: none; /* Ignore pointer events to keep underlying images clickable */
+    transition: transform 0.1s ease-in-out;
   }
 
   audio {
     display: none;
   }
 </style>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
 </head>
 <body>
 
 <div id="imageContainer" onclick="startEffects()">
-    <img src="1.png" id="imageDisplay" alt="Clickable Image">
-    <img src="hat.png" id="hatImage" alt="Hat Image">
+  <img src="1.png" id="imageDisplay" alt="Clickable Image">
 </div>
 
 <audio id="audioPlayer" loop>
@@ -61,8 +50,7 @@
 <script>
   let imageSwapFlag = false;
   let intervalId = null;
-  let hatVisible = false;
-  let imagesToPreload = ["1.png", "2.png", "hat.png"];
+  let imagesToPreload = ["1.png", "2.png"];
   let preloadedImages = [];
 
   function preloadImages() {
@@ -76,20 +64,16 @@
     if (intervalId === null) {
       document.getElementById('audioPlayer').play();
       intervalId = setInterval(swapImage, 80);
+      startConfetti(); // Start confetti animation
     }
-    jiggleImages();
-    
-    if (!hatVisible) {
-      toggleHatVisibility();
-      hatVisible = true;
-    }
+    jiggleImage();
   }
 
-  function jiggleImages() {
-    const imgContainer = document.getElementById('imageContainer');
-    imgContainer.style.transform = 'scale(1.1)';
+  function jiggleImage() {
+    const img = document.getElementById('imageDisplay');
+    img.style.transform = 'scale(1.1)';
     setTimeout(() => {
-      imgContainer.style.transform = '';
+      img.style.transform = '';
     }, 100); // Reset scaling
   }
 
@@ -99,9 +83,25 @@
     imageSwapFlag = !imageSwapFlag;
   }
 
-  function toggleHatVisibility() {
-    const hat = document.getElementById('hatImage');
-    hat.style.visibility = 'visible'; // Make the hat visible after the first click
+  function startConfetti() {
+    var duration = 15 * 1000;
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    var interval = setInterval(function() {
+      var timeLeft = animationEnd - Date.now();
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      var particleCount = 50 * (timeLeft / duration);
+      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
+      confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
+    }, 250);
   }
 
   // Preload images on window load
