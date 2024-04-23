@@ -33,11 +33,10 @@
 
   #hatImage {
     position: absolute;
-    top: 10%; /* Adjust this value to position the hat correctly */
+    top: 0%; /* Adjust this value to position the hat correctly */
     left: 50%; /* Centers the hat along the width; adjust according to your image */
     transform: translate(-50%, -50%) rotate(0deg); /* Initial transform positioning */
-    width: 30%; /* Adjust based on the desired size of the hat relative to the base image */
-    transition: transform 0.5s ease-in-out; /* Smooth transition for rotation */
+    width: 5%; /* Adjust based on the desired size of the hat relative to the base image */
     visibility: hidden; /* Initially hide the hat */
     pointer-events: none; /* Ignore pointer events to keep underlying images clickable */
   }
@@ -103,14 +102,6 @@
   function toggleHatVisibility() {
     const hat = document.getElementById('hatImage');
     hat.style.visibility = 'visible'; // Make the hat visible after the first click
-    setTimeout(function() {
-      rotateHat(20); // Rotate hat by 20 degrees; modify as needed
-    }, 1000); // Delay the rotation to see the effect clearly
-  }
-
-  function rotateHat(degrees) {
-    const hat = document.getElementById('hatImage');
-    hat.style.transform = `translate(-50%, -50%) rotate(${degrees}deg)`;
   }
 
   // Preload images on window load
