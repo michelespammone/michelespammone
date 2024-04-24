@@ -25,13 +25,32 @@
     align-items: center;
   }
 
+  @keyframes flyRight {
+        0% { transform: translateX(0px) translateY(0px); }
+        25% { transform: translateX(25vw) translateY(-50px); }
+        50% { transform: translateX(50vw) translateY(0px); }
+        75% { transform: translateX(75vw) translateY(50px); }
+        100% { transform: translateX(100vw) translateY(0px); }
+    } 
+
+    @keyframes flyLeft {
+        0% { transform: translateX(100vw) translateY(0px); }
+        25% { transform: translateX(75vw) translateY(50px); }
+        50% { transform: translateX(50vw) translateY(0px); }
+        75% { transform: translateX(25vw) translateY(-50px); }
+        100% { transform: translateX(0vw) translateY(0px); }
+    }
+
   #flyImage {
   width: 20px;  /* Adjust the width to make it very tiny */
   height: 20px; /* Adjust the height to maintain a square shape */
-  position: absolute;
+  position: fixed;
   top: 10px;    /* Adjust the top position if needed */
   left: 10px;   /* Adjust the left position if needed */
   display: none;
+  animation-duration: 8s; /* Duration of one complete cycle */
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
  }
 
   img {
@@ -90,33 +109,17 @@
       flyImg.style.left = "0px";
       flyImg.style.top = "0px";
 
-       let screenWidth = window.innerWidth;
+      function animateFly() {
+        flyImg.style.animationName = 'flyRight';
+        flyImg.addEventListener('animationiteration', () => {
+            flyImg.style.animationName = flyImg.style.animationName === 'flyRight' ? 'flyLeft' : 'flyRight';
+        });
+      }
 
-      function moveFly() {
-          let amplitude = Math.random() * screenHeight * 0.5; // Random amplitude adjustment
-          let time = 0;
-          
-          function animate() {
-              let x = time;
-              let y = amplitude * Math.sin(x); // Sine wave calculation for height
-              flyImg.style.left = x + 'px';
-              flyImg.style.top = y + 'px';
-              
-              if (x >= screenWidth) {
-                  time = 0;
-              }
-              
-              time++;
-              requestAnimationFrame(animate);
-          }
-    
-          animate();
-        }
-
-      moveFly();
-
-        flyImg.addEventListener('click', function() {
-          window.location.href = "secret-page.html";
+      animateFly();
+      
+      flyImg.addEventListener('click', function() {
+      window.location.href = "secret-page.html";
       });
     }
     jiggleImage();
