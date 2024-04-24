@@ -90,11 +90,32 @@
       flyImg.style.left = "0px";
       flyImg.style.top = "0px";
 
-       setTimeout(() => {
-        flyImg.style.transform = 'translate(90vw, 90vh)';
-        }, 0);
+       let screenWidth = window.innerWidth;
 
-        flyImg.addEventListener('transitionend', function() {
+      function moveFly() {
+          let amplitude = Math.random() * screenHeight * 0.5; // Random amplitude adjustment
+          let time = 0;
+          
+          function animate() {
+              let x = time;
+              let y = amplitude * Math.sin(x); // Sine wave calculation for height
+              flyImg.style.left = x + 'px';
+              flyImg.style.top = y + 'px';
+              
+              if (x >= screenWidth) {
+                  time = 0;
+              }
+              
+              time++;
+              requestAnimationFrame(animate);
+          }
+    
+          animate();
+        }
+
+      moveFly();
+
+        flyImg.addEventListener('click', function() {
           window.location.href = "secret-page.html";
       });
     }
