@@ -78,6 +78,14 @@
     jiggleImage();
   }
 
+   function jiggleImage() {
+    const img = document.getElementById('imageDisplay');
+    img.style.transform = 'scale(1.1)';
+    setTimeout(() => {
+      img.style.transform = '';
+    }, 100); // Reset scaling
+  }
+  
   function swapImage() {
     const img = document.getElementById('imageDisplay');
     img.src = imageSwapFlag ? "a.png" : "b.png";
