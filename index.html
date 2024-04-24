@@ -50,14 +50,23 @@
 <script>
   let imageSwapFlag = false;
   let intervalId = null;
-  let imagesToPreload = ["1.png", "2.png"];
+  let imagesToPreload = ["1.png", "a.png", "b.png"];
   let preloadedImages = [];
+  let audioFilesToPreload = ["audio.mp3"];
+  let preloadedAudioFiles = [];
 
-  function preloadImages() {
-    for (let i = 0; i < imagesToPreload.length; i++) {
-      preloadedImages[i] = new Image();
-      preloadedImages[i].src = imagesToPreload[i];
-    }
+  function preloadResources() {
+    imagesToPreload.forEach(function(image) {
+      let img = new Image();
+      img.src = image;
+      preloadedImages.push(img);
+    });
+
+    audioFilesToPreload.forEach(function(audio) {
+      let audioFile = new Audio();
+      audioFile.src = audio;
+      preloadedAudioFiles.push(audioFile);
+    });
   }
 
   function startEffects() {
@@ -69,17 +78,9 @@
     jiggleImage();
   }
 
-  function jiggleImage() {
-    const img = document.getElementById('imageDisplay');
-    img.style.transform = 'scale(1.1)';
-    setTimeout(() => {
-      img.style.transform = '';
-    }, 100); // Reset scaling
-  }
-
   function swapImage() {
     const img = document.getElementById('imageDisplay');
-    img.src = imageSwapFlag ? "1.png" : "2.png";
+    img.src = imageSwapFlag ? "a.png" : "b.png";
     imageSwapFlag = !imageSwapFlag;
   }
 
@@ -104,8 +105,8 @@
     }, 250);
   }
 
-  // Preload images on window load
-  window.onload = preloadImages;
+  // Preload images and audio files on window load
+  window.onload = preloadResources;
 </script>
 
 </body>
