@@ -54,43 +54,7 @@
   let preloadedImages = [];
   let audioFilesToPreload = ["audio.mp3"];
   let preloadedAudioFiles = [];
-
-  document.addEventListener("DOMContentLoaded", function() {
-  const imageContainer = document.getElementById('imageContainer');
-  const imageDisplay = document.getElementById('imageDisplay');
-  const ctx = imageContainer.appendChild(document.createElement('canvas')).getContext('2d');
-  let color = '#FF0000'; // Initial color for the lines
-
-  // Set up canvas element
-  imageContainer.style.position = 'relative';
-  imageContainer.addEventListener('mousemove', drawLines);
-
-  function drawLines(event) {
-    const rect = imageDisplay.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
   
-    const eyePoints = [{ x: 50, y: 50 }, { x: 250, y: 50 }]; // Point coordinates for the eyes
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  
-    ctx.beginPath();
-    ctx.moveTo(eyePoints[0].x, eyePoints[0].y);
-    ctx.lineTo(mouseX, mouseY);
-    ctx.strokeStyle = color;
-    ctx.stroke();
-    ctx.closePath();
-  
-    ctx.beginPath();
-    ctx.moveTo(eyePoints[1].x, eyePoints[1].y);
-    ctx.lineTo(mouseX, mouseY);
-    ctx.strokeStyle = color;
-    ctx.stroke();
-    ctx.closePath();
-
-    // Change color for the lines continuously
-    color = `hsl(${Math.floor(Date.now() / 10) % 360}, 80%, 50%)`;
-  }
-});
   function preloadResources() {
     imagesToPreload.forEach(function(image) {
       let img = new Image();
