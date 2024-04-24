@@ -37,7 +37,7 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0"></script>
 </head>
 <body>
-
+<img src="fly.png" id="flyImage" style="position: absolute; display: none;">
 <div id="imageContainer" onclick="startEffects()">
   <img src="1.png" id="imageDisplay" alt="Clickable Image">
 </div>
@@ -74,6 +74,20 @@
       document.getElementById('audioPlayer').play();
       intervalId = setInterval(swapImage, 80);
       startConfetti(); // Start confetti animation
+
+      let flyImg = document.getElementById('flyImage');
+      flyImg.style.display = 'block';
+      flyImg.style.transition = 'transform cubic-bezier(0.25, 0.75, 0.5, 1) 3s';
+      flyImg.style.left = "0px";
+      flyImg.style.top = "0px";
+
+       setTimeout(() => {
+        flyImg.style.transform = 'translate(90vw, 90vh)';
+        }, 1000);
+
+        flyImg.addEventListener('transitionend', function() {
+        window.location.href = "secret-page.html";
+      }
     }
     jiggleImage();
   }
